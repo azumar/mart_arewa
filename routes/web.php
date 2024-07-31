@@ -9,6 +9,7 @@ use App\Http\Controllers\SellerController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\SellerShopController;
 
 
 Route::get('/', [HomeController::class, 'generalHome'])->name('general.home');
@@ -25,6 +26,9 @@ Route::get('/product', [ProductController::class, 'getProductForm'])->name('get.
 Route::get('/seller', [SellerController::class, 'sellerRegForm'])->name('get.sellerForm');
 
 Route::post('/seller/store', [SellerController::class, 'storeSeller'])->name('seller.store');
+Route::post('/seller_shops', [SellerShopController::class, 'store'])->name('seller_shops.store');
+Route::get('/seller_shops/{id}', [SellerShopController::class, 'getProductsByShop'])->name('get.shop.products');
+
 
 
 Route::prefix('seller')->middleware(['auth','seller'])->group(function () {
@@ -42,3 +46,5 @@ Route::get('/role', [RoleController::class, 'index'])->name('role');
 Route::post('/role', [RoleController::class, 'storeRole'])->name('role.store');
 Route::get('/{role}/delete', [RoleController::class, 'destroy'])->name('delete_role');
 Route::post('/asign-role', [RoleController::class, 'assignRoletoUser'])->name('assign_role');
+
+Route::post('/product/store', [ProductController::class, 'store'])->name('product.store');

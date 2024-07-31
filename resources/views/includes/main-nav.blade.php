@@ -41,6 +41,7 @@
         Seller
       </a>
       <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+      <li><a class="dropdown-item" href="{{route('seller.home')}}">login</a></li>
       <li><a class="dropdown-item" href="#">Upload/update profile picture</a></li>
       <li><a class="dropdown-item" href="#">Change password</a></li>
         <li><a class="dropdown-item" href="#">Shops</a></li>

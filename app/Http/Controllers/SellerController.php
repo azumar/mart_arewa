@@ -6,14 +6,17 @@ use Illuminate\Http\Request;
 use App\Models\Seller;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class SellerController extends Controller
 {
 
     public function sellerHome()
     {
-     
-        return view('seller.dashboard');
+        $user = Auth::user();
+        $seller = Seller::where('seller_email', $user->email)->first();
+       // dd($seller->shops);
+        return view('seller.dashboard',['seller'=> $seller]);
     }
     public function sellerRegForm()
     {
