@@ -12,7 +12,7 @@
                     <tr>
                         <td rowspan="4" style="border: 1px solid grey; padding-bottom: 2px; ">
 
-                            <a href="/category/{{$subCategory->id}}"> <img src="/pictures/{{ $subCategory->sub_category_image }}"
+                            <a href="/products/subcat/{{$subCategory->id}}"> <img src="/pictures/{{ $subCategory->sub_category_image }}"
                                     style="width:160px;margin-top: 0px;"></a>
                         </td>
                     </tr>

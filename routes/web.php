@@ -10,6 +10,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\SellerShopController;
+use App\Http\Controllers\CartController;
 
 
 Route::get('/', [HomeController::class, 'generalHome'])->name('general.home');
@@ -21,6 +22,7 @@ Route::get('/category/{id}', [AdminController::class, 'getSubCategories'])->name
 Route::post('/subCategory/store', [AdminController::class, 'addNewSubCategory'])->name('sub_category.store');
 
 Route::get('/product', [ProductController::class, 'getProductForm'])->name('get.product-form');
+Route::get('/products/subcat/{id}', [ProductController::class, 'getProductBySubCat'])->name('get.subcat.products');
 
 
 Route::get('/seller', [SellerController::class, 'sellerRegForm'])->name('get.sellerForm');
@@ -48,3 +50,14 @@ Route::get('/{role}/delete', [RoleController::class, 'destroy'])->name('delete_r
 Route::post('/asign-role', [RoleController::class, 'assignRoletoUser'])->name('assign_role');
 
 Route::post('/product/store', [ProductController::class, 'store'])->name('product.store');
+Route::get('/product/{id}', [ProductController::class, 'productDetails']);
+// product/5
+
+// routes/web.php
+
+
+
+Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
+Route::post('/cart/update', [CartController::class, 'update'])->name('cart.update');
+Route::post('/cart/remove', [CartController::class, 'remove'])->name('cart.remove');
