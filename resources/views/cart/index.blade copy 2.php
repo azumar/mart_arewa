@@ -65,13 +65,16 @@
                 @if(count($cart) > 0)
                     <div class="text-right">
                         <h3>Total: #{{ $total }}</h3>
-                        <button class="btn btn-success" id = "chk" onclick="showAccountSection()">Checkout</button>
+                        <form action="{{ route('checkout') }}" method="POST">
+                            @csrf
+                            <button type="submit" class="btn btn-success">Checkout</button>
+                        </form>
                     </div>
                 @endif
             </div>
 
             <!-- Right side: User details / Login / Register -->
-            <div class="col-md-4" id="accountSection" style="display: none;">
+            <div class="col-md-4">
                 @auth
                     <h2>Your Details</h2>
                     <p>Name: {{ Auth::user()->name }}</p>
@@ -98,7 +101,7 @@
                                             <label for="password" class="form-label">Password</label>
                                             <input type="password" class="form-control" id="password" name="password" required>
                                         </div>
-                                        <button type="submit" class="btn btn-primary">Login yo checkout</button>
+                                        <button type="submit" class="btn btn-primary">Login</button>
                                     </form>
                                 </div>
                             </div>
@@ -111,38 +114,26 @@
                             </h2>
                             <div id="collapseRegister" class="accordion-collapse collapse" aria-labelledby="headingRegister" data-bs-parent="#accordionExample">
                                 <div class="accordion-body">
-                                    
-                                <form action="{{route('checkout')}}" method="POST">
-            @csrf
-            
-            <div class="form-group">
-                <label for="seller_name"> Name</label>
-                <input type="text" class="form-control" id="buyer_name" name="buyer_name" required>
-            </div>
-            <div class="form-group">
-                <label for="seller_address">Buyer Address</label>
-                <input type="text" class="form-control" id="buyer_address" name="buyer_address" required>
-            </div>
-            <div class="form-group">
-                <label for="seller_contact">Buyer Contact</label>
-                <input type="text" class="form-control" id="buyer_contact" name="buyer_contact" required>
-            </div>
-            <div class="form-group">
-                <label for="seller_email">Buyer Email</label>
-                <input type="email" class="form-control" id="buyer_email" name="buyer_email" required>
-            </div>
-            <div class="form-group">
-                <label for="buyer_password">Buyer Password</label>
-                <input type="password" class="form-control" id="buyer_password" name="buyer_password" required>
-            </div>
-            <div class="form-group">
-                <label for="buyer_password_confirm">Confirm Password</label>
-                <input type="password" class="form-control" id="buyer_password_confirm" name="buyer_password_confirm" required>
-            </div>
-           
-            <button type="submit" class="btn btn-primary">Continue to Checkout</button>
-        </form>
-                                    
+                                    <form action="{{ route('buyers.registration') }}" method="POST">
+                                        @csrf
+                                        <div class="mb-3">
+                                            <label for="buyer_name" class="form-label">Full Name</label>
+                                            <input type="text" class="form-control" id="buyer_name" name="buyer_name" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="buyer_email" class="form-label">Email address</label>
+                                            <input type="email" class="form-control" id="buyer_email" name="buyer_email" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="buyer_password" class="form-label">Password</label>
+                                            <input type="password" class="form-control" id="buyer_password" name="buyer_password" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="buyer_password_confirm" class="form-label">Confirm Password</label>
+                                            <input type="password" class="form-control" id="buyer_password_confirm" name="buyer_password_confirm" required>
+                                        </div>
+                                        <button type="submit" class="btn btn-success">Register</button>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -151,11 +142,4 @@
             </div>
         </div>
     </div>
-
-    <script>
-        function showAccountSection() {
-            document.getElementById('accountSection').style.display = 'block';
-            document.getElementById('chk').style.display = 'none';
-        }
-    </script>
 @endsection

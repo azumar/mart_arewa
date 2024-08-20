@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Seller;
 use App\Models\User;
+use App\Models\Order;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
@@ -15,8 +16,8 @@ class SellerController extends Controller
     {
         $user = Auth::user();
         $seller = Seller::where('seller_email', $user->email)->first();
-       // dd($seller->shops);
-        return view('seller.dashboard',['seller'=> $seller]);
+        // dd($seller->shops);
+        return view('seller.dashboard', ['seller' => $seller]);
     }
     public function sellerRegForm()
     {
@@ -43,10 +44,12 @@ class SellerController extends Controller
                 $user->password = $request->input('seller_password');
                 $user->save();
 
+                
+
             }
         );
-         // Redirect the user back with a success message
-         return redirect()->back()->with('success', 'Application received successfully!');
+        // Redirect the user back with a success message
+        return redirect()->back()->with('success', 'Application received successfully!');
     }
 
 

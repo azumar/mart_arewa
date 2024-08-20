@@ -45,7 +45,6 @@ class CartController extends Controller
         return redirect()->route('orders.index')->with('success', 'Your order has been placed successfully.');
 
     } elseif ($request->has('buyer_name')) {
-        
         DB::transaction(function () use ($request) {
             $buyer = new Buyer();
             $buyer->buyer_name = $request->input('buyer_name');
@@ -83,12 +82,7 @@ class CartController extends Controller
 
         return redirect()->route('orders.index')->with('success', 'Your order has been placed successfully.');
 
-    } 
-    elseif($request->has('email')){
-
-    }
-    
-    else {
+    } else {
         return redirect()->route('buyers.registration')->with('error', 'Please provide your details to proceed.');
     }
 }

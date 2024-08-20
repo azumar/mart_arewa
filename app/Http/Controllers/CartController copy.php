@@ -19,48 +19,11 @@ class CartController extends Controller
     }
 
     public function checkout(Request $request)
-{
-    if (Auth::check()) {
-        $user = Auth::user();
-        $cart = session()->get('cart', []);
+    {
 
-        if (empty($cart)) {
-            return redirect()->route('cart.index')->with('error', 'Your cart is empty.');
-        }
+        if (Auth::check()) {
 
-        $total = 0;
-        foreach ($cart as $item) {
-            $total += $item['price'] * $item['quantity'];
-        }
-
-        // Create an order for the authenticated user
-        $order = new Order();
-        $order->user_id = $user->id;
-        $order->order_total = $total;
-        $order->save();
-
-        // Clear the cart session
-        session()->forget('cart');
-
-        return redirect()->route('orders.index')->with('success', 'Your order has been placed successfully.');
-
-    } elseif ($request->has('buyer_name')) {
-        
-        DB::transaction(function () use ($request) {
-            $buyer = new Buyer();
-            $buyer->buyer_name = $request->input('buyer_name');
-            $buyer->buyer_address = $request->input('buyer_address');
-            $buyer->buyer_contact = $request->input('buyer_contact');
-            $buyer->buyer_email = $request->input('buyer_email');
-            $buyer->buyer_password = bcrypt($request->input('buyer_password'));
-            $buyer->save();
-
-            $user = new User();
-            $user->name = $buyer->buyer_name;
-            $user->email = $buyer->buyer_email;
-            $user->password = bcrypt($request->input('buyer_password'));
-            $user->save();
-
+            $user = Auth::user(); // Access authenticated user data
             $cart = session()->get('cart', []);
 
             if (empty($cart)) {
@@ -71,28 +34,50 @@ class CartController extends Controller
             foreach ($cart as $item) {
                 $total += $item['price'] * $item['quantity'];
             }
+        } elseif ($request->has('buyer_name')) {
+            //dd($request);
+            DB::transaction(
+                function () use ($request) {
+                    $buyer = new Buyer();
+                    $buyer->buyer_name = $request->input('buyer_name');
+                    $buyer->buyer_address = $request->input('buyer_address');
+                    $buyer->buyer_contact = $request->input('buyer_contact');
+                    $buyer->buyer_email = $request->input('buyer_email');
+                    $buyer->buyer_password = $request->input('buyer_password');
+                    $buyer->buyer_password_confirm = $request->input('buyer_password_confirm');
+                    $buyer->save();
 
-            $order = new Order();
-            $order->buyer_id = $buyer->id;
-            $order->order_total = $total;
-            $order->save();
+                    $user = new User();
+                    $user->name = $request->input('buyer_name');
+                    $user->email = $request->input('buyer_email');
+                    $user->password = $request->input('buyer_password');
+                    $user->save();
+                    $cart = session()->get('cart', []);
 
-            // Clear the cart session
-            session()->forget('cart');
-        });
+                if (empty($cart)) {
+                    return redirect()->route('cart.index')->with('error', 'Your cart is empty.');
+                } else {
+                    //dd($cart);
+                    $total = 0;
+                    foreach ($cart as $item) {
+                        $total += $item['price'] * $item['quantity'];
+                    }
+                    //dd($buyer->id);
+                    $order = new Order();
+                    $order->buyer_id = $buyer->id;
+                    $order->order_total = $total;
+                    $order->save();
+                }
+                }
+            );
 
-        return redirect()->route('orders.index')->with('success', 'Your order has been placed successfully.');
 
-    } 
-    elseif($request->has('email')){
+        } else {
+            return redirect()->route('buyers.registration')->with('error', 'Your cart is empty.');
+        }
+
 
     }
-    
-    else {
-        return redirect()->route('buyers.registration')->with('error', 'Please provide your details to proceed.');
-    }
-}
-
 
     public function add(Request $request)
     {

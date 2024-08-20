@@ -22,7 +22,7 @@
                 <tbody>
                     @foreach ($products as $product)
                         <tr>
-                            <td rowspan="2">
+                            <td >
 
                                 <a href="/product/{{$product->id}}"> <img src="/products/{{ $product->product_image }}"
                                         style="width:80px;margin-top: 0px;"></a>

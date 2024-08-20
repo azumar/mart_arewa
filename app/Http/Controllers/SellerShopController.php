@@ -14,8 +14,10 @@ class SellerShopController extends Controller
 
     public function getProductsByShop(Request $request){
         $shopId = $request->id;
-        $shop  = SellerShop::find($shopId)->first();
-        //dd($shop);
+        //dd($shopId );
+
+        $shop  = SellerShop::where('id',$shopId)->first();
+       // dd($shop);
         $products = Product::where('shop_id', $shopId  )->get();
         $subcats = SubCategory::all();
         return view ('seller.shop-products', ['products' => $products, 'subCategories'=>$subcats, 'shop'=>$shop]);

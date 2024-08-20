@@ -8,7 +8,7 @@
     <div class="row">
 
         <div class="col-md-7">
-            <h3> Products in the shop ...</h3>
+            <h3> Products </h3>
 
             <table class="table table-striped" style=align=center">
                 <thead>
@@ -22,7 +22,7 @@
                 <tbody>
                     @foreach ($products as $product)
                         <tr>
-                            <td rowspan="2">
+                            <td >
 
                                 <a href="/product/{{$product->id}}"> <img src="/products/{{ $product->product_image }}"
                                         style="width:80px;margin-top: 0px;"></a>

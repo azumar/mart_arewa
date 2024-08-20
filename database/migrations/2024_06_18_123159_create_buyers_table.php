@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -14,10 +13,13 @@ return new class extends Migration
         Schema::create('buyers', function (Blueprint $table) {
             $table->id();
             $table->string('buyer_name');
-            $table->dateTime('buyer_date');
-            $table->double('buyer_amount');
-            $table->string('buyer_NationalId');
-            $table->string('buyer_picture');
+            $table->string('buyer_address');
+            $table->string('buyer_contact');
+            $table->string('buyer_email');
+            $table->string('buyer_password');
+            $table->string('buyer_password_confirm');
+            $table->string('buyer_NationalId')->nullable();
+            $table->string('buyer_picture')->nullable();
             $table->timestamps();
         });
     }

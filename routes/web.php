@@ -11,6 +11,7 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\SellerShopController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\BuyerController;
 
 
 Route::get('/', [HomeController::class, 'generalHome'])->name('general.home');
@@ -51,9 +52,7 @@ Route::post('/asign-role', [RoleController::class, 'assignRoletoUser'])->name('a
 
 Route::post('/product/store', [ProductController::class, 'store'])->name('product.store');
 Route::get('/product/{id}', [ProductController::class, 'productDetails']);
-// product/5
 
-// routes/web.php
 
 
 
@@ -61,3 +60,6 @@ Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
 Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
 Route::post('/cart/update', [CartController::class, 'update'])->name('cart.update');
 Route::post('/cart/remove', [CartController::class, 'remove'])->name('cart.remove');
+Route::post('/checkout', [CartController::class, 'checkout'])->name('checkout');
+Route::get('/buyer', [BuyerController::class, 'index'])->name('buyers.registration');
+
